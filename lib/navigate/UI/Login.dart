@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portalkiwi/model/User.dart';
 
 class Login extends StatefulWidget {
 
@@ -30,7 +31,8 @@ class _LoginState extends State<Login> {
             RaisedButton(
               onPressed: (){
                 print("clicou!");
-                _call();
+                User user = User("Andrei", "testando_key", "token");
+                _call(user);
               },
               child: Text("Entrar no APP"),
             )

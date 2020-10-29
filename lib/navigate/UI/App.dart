@@ -8,12 +8,12 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MaterialApp(home: Scaffold(
       body: Column(
         children: [
           Text("Estamos na Home page")
         ],
       ),
-    );
+    ),);
   }
 }
