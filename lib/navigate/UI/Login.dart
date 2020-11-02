@@ -13,6 +13,7 @@ class Login extends StatefulWidget {
 
   @override
   _LoginState createState() => __loginState;
+
 }
 
 class _LoginState extends State<Login> {
@@ -52,7 +53,8 @@ class _LoginState extends State<Login> {
     return MaterialApp(
       home: Scaffold(
         body:  Padding(padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
-          child: Column(
+          child: ListView(
+              scrollDirection: Axis.vertical,
             children: lista,
           ),
         ),
@@ -60,19 +62,30 @@ class _LoginState extends State<Login> {
     );
   }
 
+
+  List<Widget> _forgetStep1(){
+
+  }
+
+  List<Widget> _forgetStep2(){
+
+  }
+
   List<Widget> _newUserForm(){
 
-    Input email = Input("E-mail", icon: Icon(Icons.email));
-    Input senha = Input("Senha", icon: Icon(Icons.lock));
-    Input nome = Input("Nome", icon: Icon(Icons.lock));
+    Input email = Input("E-mail", icon: Icon(Icons.email), textInputType: TextInputType.emailAddress,);
+    Input senha = Input("Senha", icon: Icon(Icons.lock), textInputType: TextInputType.visiblePassword,);
+    Input nome = Input("Nome", icon: Icon(Icons.person));
 
     return [
 
       Padding(
         padding: EdgeInsets.all(10),
-        child: Text(
-          "Digite os dados abaixo:",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        child: Center(
+          child: Text(
+            "Digite os dados abaixo:",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
         ),
       ),
 
@@ -89,9 +102,16 @@ class _LoginState extends State<Login> {
         padding: EdgeInsets.all(10),
         child: senha,
       ),
-      Btn("Entrar", (){
+
+      Btn("Salvar", (){
         setState(() {
           /// tentar vazer o login aqui
+        });
+      }),
+
+      BtnBackLogin((){
+        setState(() {
+          _widgets =  _getOptions();
         });
       })
     ];
@@ -99,16 +119,28 @@ class _LoginState extends State<Login> {
 
   List<Widget> _LoginForm(){
 
-    Input email = Input("E-mail", icon: Icon(Icons.email));
-    Input senha = Input("senha", icon: Icon(Icons.lock));
+    TextEditingController emailController  =  TextEditingController();
+    TextEditingController senhaController  =  TextEditingController();
+
+    Input email = Input("E-mail", icon: Icon(Icons.email),
+      textEditingController: emailController,
+      textInputType: TextInputType.emailAddress,
+    );
+
+    Input senha = Input("senha", icon: Icon(Icons.lock),
+      textEditingController: senhaController,
+      textInputType: TextInputType.visiblePassword,
+    );
 
     return [
 
       Padding(
         padding: EdgeInsets.all(10),
-        child: Text(
-          "Digite os dados abaixo:",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        child: Center(
+          child: Text(
+            "Digite os dados abaixo:",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
         ),
       ),
 
@@ -116,11 +148,18 @@ class _LoginState extends State<Login> {
         padding: EdgeInsets.all(10),
         child: email,
       ),
+      
       Padding(
         padding: EdgeInsets.all(10),
         child: senha,
       ),
+
       Btn("Entrar", (){
+        if(emailController.text != "" && senhaController.text != ""){
+          print("Está ok!");
+        } else {
+          print("nao esta  ok");
+        }
         setState(() {
           /// tentar vazer o login aqui
         });
@@ -133,7 +172,9 @@ class _LoginState extends State<Login> {
       }),
 
       BtnBackLogin((){
-
+        setState(() {
+          _widgets =  _getOptions();
+        });
       })
 
     ];
@@ -144,12 +185,16 @@ class _LoginState extends State<Login> {
     return [
 
       // TEXTO DE APRESENTAÇÃO
-      Text("Seja bem vindo ao Portal Kiwi!", style: TextStyle(fontSize: 16),),
+      Center(
+        child: Text("Seja bem vindo ao Portal Kiwi!", style: TextStyle(fontSize: 16),),
+      ),
       Padding(
         padding: EdgeInsets.all(10),
-        child: Text(
-          "Escolha uma opção abaixo:",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        child: Center(
+          child: Text(
+            "Escolha uma opção abaixo:",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
         ),
       ),
 
