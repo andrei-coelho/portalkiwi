@@ -19,59 +19,60 @@ class Controller extends StatefulWidget {
 
 class _ControllerState extends State<Controller> {
 
-  User user;
-  bool userChecked = false;
-  Widget UI = Load();
+  User _user;
+  bool _userChecked = false;
+  Widget _UI = Load();
+
+  @override
+  void initState() {
+    super.initState();
+    _verifyUserDB();
+  }
 
   @override
   Widget build(BuildContext context) {
-    if(user == null) {
-      verifyUserDB();
+    if(!_userChecked && _user != null){
+      _verifyUserAPI();
     }
-    if(!userChecked && user != null){
-      verifyUserAPI();
-    }
-    return UI;
+    return _UI;
   }
 
-  void verifyUserAPI(){
-    UI = Load();
-    setState(() {
-      API.getData(user.token + "/getUser", (response){
-        if(!response['error']){
-          setState(() {
-            userChecked = true;
-            UI = App();
-          });
+  void _verifyUserAPI(){
+    _UI = Load();
+    API.getData(_user.token + "/getUser", (response){
+      if(!response['error']){
+        setState(() {
+          _userChecked = true;
+          _UI = App();
+        });
+      } else {
+        if(response['response'] <= 499){
+          // erro ao validar, solicite que o usuário faça o login novamente
+          print("erro ao validar o usuário");
         } else {
-          if(response['response'] <= 499){
-            // erro ao validar, solicite que o usuário faça o login novamente
-            print("erro ao validar o usuário");
-          } else {
-            // problema no servidor, inform o usuário e feche o app
-            print("erro no servidor");
-          }
+          // problema no servidor, informe o usuário e feche o app
+          print("erro no servidor");
         }
-      });
+      }
     });
 
   }
 
-  void verifyUserDB(){
-    setState(() {
-      SQLi.getUser((userDB){
-        if(userDB == null){
-          UI = Login((userLogin){
+  void _verifyUserDB(){
+    SQLi.getUser((userDB){
+      if(userDB == null){
+        setState(() {
+          _UI = Login((userLogin){
             setState(() {
-              this.user = userLogin;
+              this._user = userLogin;
             });
           });
-        } else {
-          setState(() {
-            this.user = userDB;
-          });
-        }
-      });
+        });
+      } else {
+        setState(() {
+          this._user = userDB;
+        });
+      }
     });
   }
 

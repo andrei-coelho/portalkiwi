@@ -1,9 +1,11 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:portalkiwi/resources/Config.dart';
+
 class API {
 
-  static final _API_URL = "http://192.168.0.26/api_portalkiwi/";
+  static final _API_URL = Config.URL_API;
 
   static getData(String url, Function callback, {Map<String, dynamic> post}) async {
     Map<String, dynamic> rtr = Map();

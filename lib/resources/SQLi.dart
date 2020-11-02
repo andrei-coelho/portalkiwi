@@ -2,10 +2,9 @@
 import 'package:sqflite/sqflite.dart' as sqflite;
 import 'package:path/path.dart';
 import 'package:portalkiwi/model/User.dart';
+import 'package:portalkiwi/resources/Config.dart';
 
 class SQLi {
-
-  static const TABELA_USUARIOS = "usuarios";
 
   static Future<sqflite.Database> _getDb() async {
 
@@ -17,7 +16,7 @@ class SQLi {
 
   static void gerarTabelas(db, dbversion){
 
-    String sql = "CREATE TABLE "+TABELA_USUARIOS+" "
+    String sql = "CREATE TABLE "+Config.TABELA_USUARIOS+" "
         "(id INTEGER PRIMARY KEY AUTOINCREMENT,"
         " nome VARCHAR, device_key VARCHAR, token VARCHAR)";
     db.execute(sql);
@@ -27,7 +26,7 @@ class SQLi {
   static Future<User> getUser(Function callback) async {
 
     sqflite.Database database = await _getDb();
-    List usuariosDB = await database.rawQuery("SELECT * FROM "+TABELA_USUARIOS);
+    List usuariosDB = await database.rawQuery("SELECT * FROM "+Config.TABELA_USUARIOS);
 
     User user;
 
@@ -48,7 +47,7 @@ class SQLi {
       "device_key":user.device_key
     };
 
-    return await database.insert(TABELA_USUARIOS, userToSave);
+    return await database.insert(Config.TABELA_USUARIOS, userToSave);
 
   }
 
