@@ -65,10 +65,95 @@ class _LoginState extends State<Login> {
 
   List<Widget> _forgetStep1(){
 
+    TextEditingController emailControllerForget  =  TextEditingController();
+    Input emailForget = Input(
+      "E-mail",
+      icon: Icon(Icons.email),
+      textInputType: TextInputType.emailAddress,
+      textEditingController: emailControllerForget,
+    );
+
+      return [
+        Padding(
+          padding: EdgeInsets.all(10),
+          child: Center(
+            child: Text(
+              "Enviaremos um código de recuperação da sua conta de e-mail",
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+        ),
+
+        Padding(
+          padding: EdgeInsets.all(10),
+          child: emailForget,
+        ),
+
+        Btn("Enviar", (){
+          /// gerar código e enviar para o email via api
+          setState(() {
+            _widgets = _forgetStep2();
+          });
+        }),
+
+        BtnBackLogin((){
+          setState(() {
+            _widgets =  _getOptions();
+          });
+        })
+      ];
   }
 
   List<Widget> _forgetStep2(){
 
+    TextEditingController codeInputController  =  TextEditingController();
+
+    Input codeInput = Input(
+      "Código",
+      icon: Icon(Icons.lock),
+      textInputType: TextInputType.text,
+      textEditingController: codeInputController,
+    );
+
+    return [
+      Padding(
+        padding: EdgeInsets.all(10),
+        child: Center(
+          child: Text(
+            "Enviamos um código para o seu e-mail:",
+            style: TextStyle(fontSize: 18),
+          ),
+        ),
+      ),
+
+      Padding(
+        padding: EdgeInsets.all(10),
+        child: Center(
+          child: Text(
+            "Digite o código abaixo:",
+            style: TextStyle(fontSize: 18),
+          ),
+        ),
+      ),
+
+      Padding(
+        padding: EdgeInsets.all(10),
+        child: codeInput,
+      ),
+
+      Btn("Enviar", (){
+        setState(() {
+          /// tentar vazer o login aqui
+        });
+      }),
+
+      BtnBackLogin((){
+        setState(() {
+          _widgets =  _forgetStep1();
+        });
+      })
+
+    ];
   }
 
   List<Widget> _newUserForm(){
@@ -167,7 +252,8 @@ class _LoginState extends State<Login> {
 
       BtnLink("Esqueci minha senha", (){
         setState(() {
-          /// faça algo aqui
+          _widgets = [];
+          _widgets =  _forgetStep1();
         });
       }),
 
