@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:portalkiwi/navigate/Controller.dart';
+import 'package:portalkiwi/navigate/MainController.dart';
 
-void main() => runApp(Controller());
+void main() => runApp(MainController());
 
 /**
  *

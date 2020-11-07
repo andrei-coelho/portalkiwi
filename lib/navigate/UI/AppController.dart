@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class App extends StatefulWidget {
+class AppController extends StatefulWidget {
   @override
-  _AppState createState() => _AppState();
+  _AppControllerState createState() => _AppControllerState();
 }
 
-class _AppState extends State<App> {
+class _AppControllerState extends State<AppController> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(home: Scaffold(

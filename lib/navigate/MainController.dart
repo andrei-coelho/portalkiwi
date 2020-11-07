@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 
 // RESOURCES AND MODEL
 import 'package:portalkiwi/model/User.dart';
-import 'package:portalkiwi/navigate/UI/App.dart';
+import 'package:portalkiwi/navigate/UI/AppController.dart';
 import 'package:portalkiwi/resources/SQLi.dart';
 import 'package:portalkiwi/resources/API.dart';
 
 // UI
 import 'package:portalkiwi/navigate/UI/Load.dart';
-import 'package:portalkiwi/navigate/UI/Login.dart';
+import 'package:portalkiwi/navigate/UI/LoginController.dart';
 
 
 
-class Controller extends StatefulWidget {
+class MainController extends StatefulWidget {
   @override
-  _ControllerState createState() => _ControllerState();
+  _MainControllerState createState() => _MainControllerState();
 }
 
-class _ControllerState extends State<Controller> {
+class _MainControllerState extends State<MainController> {
 
   User _user;
   bool _userChecked = false;
@@ -43,7 +43,7 @@ class _ControllerState extends State<Controller> {
       if(!response['error']){
         setState(() {
           _userChecked = true;
-          _UI = App();
+          _UI = AppController();
         });
       } else {
         if(response['response'] <= 499){
@@ -62,7 +62,7 @@ class _ControllerState extends State<Controller> {
     SQLi.getUser((userDB){
       if(userDB == null){
         setState(() {
-          _UI = Login((userLogin){
+          _UI = LoginController((userLogin){
             setState(() {
               this._user = userLogin;
             });
