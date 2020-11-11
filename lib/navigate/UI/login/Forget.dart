@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:portalkiwi/navigate/components/Btn.dart';
 import 'package:portalkiwi/navigate/components/Input.dart';
+import 'package:portalkiwi/providers/LoginProvider.dart';
 
 class Forget extends StatefulWidget {
-
-  final _ForgetState _state = _ForgetState();
-
-  Forget(Function call, {Key key}):super(key:key){
-    _state.setCallBack(call);
-  }
 
   @override
   _ForgetState createState() => _ForgetState();
@@ -16,22 +11,18 @@ class Forget extends StatefulWidget {
 
 class _ForgetState extends State<Forget> {
 
-  Function _call;
   ListView _listView;
-
-  void setCallBack(Function call){
-    _call = call;
-  }
+  LoginProvider _provider;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _listView = _forgetStepOne();
   }
 
   @override
   Widget build(BuildContext context) {
+    _provider = LoginProvider.of(context);
     return _listView;
   }
 
@@ -70,7 +61,7 @@ class _ForgetState extends State<Forget> {
         }),
 
         BtnBackLogin((){
-          _call("options");
+          _provider.alterarView("options");
         })
       ],
     );
@@ -89,6 +80,8 @@ class _ForgetState extends State<Forget> {
     );
 
     return ListView(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
       children: [
         Padding(
           padding: EdgeInsets.all(10),
@@ -116,13 +109,11 @@ class _ForgetState extends State<Forget> {
         ),
 
         Btn("Enviar", (){
-          setState(() {
-            /// tentar vazer o login aqui
-          });
+
         }),
 
         BtnBackLogin((){
-          _call("options");
+          _provider.alterarView("options");
         })
 
       ],

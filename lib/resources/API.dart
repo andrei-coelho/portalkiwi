@@ -5,9 +5,10 @@ import 'package:portalkiwi/resources/Config.dart';
 
 class API {
 
-  static final _API_URL = Config.URL_API;
+  static const _API_URL = Config.URL_API;
 
-  static getData(String url, Function callback, {Map<String, dynamic> post}) async {
+  static Future<Map> getData(String url, Function callback, {Map<String, dynamic> post}) async {
+
     Map<String, dynamic> rtr = Map();
     try {
       http.Response response = await http.get(_API_URL + url);
@@ -23,7 +24,6 @@ class API {
       rtr['error'] = true;
       rtr['response'] = 999;
     }
-
     callback(rtr);
 
   }

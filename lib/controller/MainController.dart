@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
-// RESOURCES AND MODEL
+/// RESOURCES AND MODEL
 import 'package:portalkiwi/model/User.dart';
-import 'package:portalkiwi/navigate/UI/AppController.dart';
 import 'package:portalkiwi/resources/SQLi.dart';
 import 'package:portalkiwi/resources/API.dart';
 
-// UI
+/// UI
 import 'package:portalkiwi/navigate/UI/Load.dart';
-import 'package:portalkiwi/navigate/UI/LoginController.dart';
 
+/// CONTROLLERS
+import 'package:portalkiwi/controller/LoginController.dart';
+import 'package:portalkiwi/controller/AppController.dart';
 
 
 class MainController extends StatefulWidget {
@@ -62,10 +63,8 @@ class _MainControllerState extends State<MainController> {
     SQLi.getUser((userDB){
       if(userDB == null){
         setState(() {
-          _UI = LoginController((userLogin){
-            setState(() {
-              this._user = userLogin;
-            });
+          _UI = LoginController((){
+            _verifyUserDB();
           });
         });
       } else {

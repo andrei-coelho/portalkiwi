@@ -7,10 +7,8 @@ class Btn extends StatelessWidget {
   Function _callback;
   bool outline = false;
 
-  Btn(this._text, this._callback, {bool border}){
-    if(border != null){
-      outline = border;
-    }
+  Btn(this._text, this._callback, {bool border:false}){
+    outline = border;
   }
 
   @override
@@ -55,6 +53,7 @@ class BtnLink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Padding(padding: EdgeInsets.all(5),
       child: Container(
         width: 240,
@@ -73,6 +72,7 @@ class BtnLink extends StatelessWidget {
             )
         ),
       ),);
+      
   }
 
 }

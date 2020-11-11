@@ -2,14 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:portalkiwi/model/User.dart';
 import 'package:portalkiwi/navigate/components/Btn.dart';
 import 'package:portalkiwi/navigate/components/Input.dart';
+import 'package:portalkiwi/providers/LoginProvider.dart';
 
 class LoginForm extends StatefulWidget {
-
-  final _LoginFormState _state = _LoginFormState();
-
-  LoginForm(Function call, Function callUser, {Key key}):super(key:key){
-    _state.setCallBacks(call, callUser);
-  }
 
   @override
   _LoginFormState createState() => _LoginFormState();
@@ -17,15 +12,12 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
 
-  Function _call, _callUser;
-
-  void setCallBacks(Function call, Function callUser){
-    _call = call;
-    _callUser = callUser;
-  }
+  LoginProvider _provider;
 
   @override
   Widget build(BuildContext context) {
+
+    _provider = LoginProvider.of(context);
 
     TextEditingController emailController  =  TextEditingController();
     TextEditingController senhaController  =  TextEditingController();
@@ -41,6 +33,9 @@ class _LoginFormState extends State<LoginForm> {
     );
 
     return ListView(
+
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
       children: [
 
         Padding(
@@ -69,16 +64,14 @@ class _LoginFormState extends State<LoginForm> {
           } else {
             print("nao esta  ok");
           }
-          _callUser(User("Andrei", "_device_key", "_token"));
+
+          // _provider.userSaved();
+
         }),
 
-        BtnLink("Esqueci minha senha", (){
-          _call("forget");
-        }),
+        BtnLink("Esqueci minha senha", () => _provider.alterarView("forget")),
 
-        BtnBackLogin((){
-          _call("options");
-        })
+        BtnBackLogin(() => _provider.alterarView("options"))
 
       ],
     );
